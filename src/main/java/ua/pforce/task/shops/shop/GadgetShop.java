@@ -1,5 +1,7 @@
 package ua.pforce.task.shops.shop;
 
+import java.util.HashMap;
+
 import static ua.pforce.task.shops.domain.Category.SHOP2_CAT1;
 import static ua.pforce.task.shops.domain.Category.SHOP2_CAT2;
 import static ua.pforce.task.shops.domain.Category.SHOP2_CAT3;
@@ -19,8 +21,9 @@ public class GadgetShop extends AbstractShop{
 
     // Initializes the shop. Hardcoded relationship between the shop and its categories.
     private GadgetShop() {
+        categories = new HashMap<>();
         categories.put(SHOP2_CAT1.getName(), SHOP2_CAT1);
         categories.put(SHOP2_CAT2.getName(), SHOP2_CAT2);
-        categories.put(SHOP2_CAT3.getName(), SHOP2_CAT1);
+        categories.put(SHOP2_CAT3.getName(), SHOP2_CAT3);
     }
 }

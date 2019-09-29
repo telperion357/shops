@@ -39,7 +39,10 @@ public class JdbcShopsDao implements IShopsDao {
 
         try (Connection conn = dataSource.getConnection()) {
 
-            try(PreparedStatement saveStmt = conn.prepareStatement(SAVE_PRODUCT)) {
+            try(PreparedStatement saveStmt = conn.prepareStatement(
+                    SAVE_PRODUCT,
+                    PreparedStatement.RETURN_GENERATED_KEYS)) {
+
                 prepareStatementWithProduct(saveStmt, product, category);
                 saveStmt.executeUpdate();
 
@@ -66,8 +69,11 @@ public class JdbcShopsDao implements IShopsDao {
     public List<Product> getProductsByCategory(Category category) {
 
         try (Connection conn = dataSource.getConnection();
-             PreparedStatement userStatement = conn.prepareStatement(FIND_BY_CATEGORY);
-             ResultSet rs = userStatement.executeQuery()) {
+             PreparedStatement ps = conn.prepareStatement(FIND_BY_CATEGORY)) {
+
+            ps.setLong(1, category.getId());
+
+            ResultSet rs = ps.executeQuery();
 
             final List<Product> products = new ArrayList();
 
@@ -124,7 +130,7 @@ public class JdbcShopsDao implements IShopsDao {
                 int[] affectedRecords = updateStmt.executeBatch();
 
                 return Arrays.stream(affectedRecords)
-                        .allMatch(i -> i == 1);
+                        .allMatch(affectedRows -> affectedRows == 1);
             }
         } catch (SQLException e) {
             LOGGER.info(UPDATE_FAILED.getMsg());

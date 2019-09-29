@@ -17,8 +17,8 @@ public interface IShopsDao {
 
     /**
      * Reads the list of products under provided category from the database.
-     * @param category
-     * @return
+     * @param category The category, from which to read the products.
+     * @return The list of products in the category.
      */
     List<Product> getProductsByCategory(Category category);
 
@@ -40,7 +40,7 @@ public interface IShopsDao {
     /**
      * Updates the price of the provided products in the database.
      * @param products the list of products to update the price.
-     * @return true, if all individual updates were successful; false otherwise.     *
+     * @return true, if all individual updates were successful; false otherwise.
      */
     boolean updateProductsPrice(List<Product> products);
 }
